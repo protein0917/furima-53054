@@ -17,42 +17,26 @@
 ### Association
 
 - has_many :items
-- has_one :profile
 - has_one :shipping_adress
-- has_one :credit_card
 
 ## items テーブル
 
-| Column        | Type       | Options     |
-| --------      | ------     | ----------- |
-| name          | string     | null: false |
-| text          | text       | null: false |
-| price         | integer    | null: false |
-| brand         | text       | null: false |
-| condition     | integer    | null: false |
-| shipping_free | integer    | null: false |
-| shipping_area | integer    | null: false |
-| shipping_day  | integer    | null: false |
-| category      | references | null: false |
-| seller        | references | null: false |
-| buyer         | references | null: false |
+| Column           | Type       | Options     |
+| --------         | ------     | ----------- |
+| name             | string     | null: false |
+| text             | text       | null: false |
+| price            | integer    | null: false |
+| brand            | text       | null: false |
+| condition_id     | integer    | null: false |
+| shipping_free_id | integer    | null: false |
+| shipping_area_id | integer    | null: false |
+| shipping_day_id  | integer    | null: false |
+| category_id      | integer    | null: false |
+| user             | references | null: false |
 
 ### Association
 
-- has_many :item_images
-- belongs_to :item_category
 - belongs_to :user
-
-## item_categories テーブル
-
-| Column   | Type       | Options     |
-| -------- | ------     | ----------- |
-| name     | string     | null: false |
-| ancestry | string     | null: false |
-
-### Association
-
-- has_many :items
 
 ## shipping_adress テーブル
 
