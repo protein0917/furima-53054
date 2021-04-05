@@ -21,49 +21,52 @@
 
 ## items テーブル
 
-| Column           | Type       | Options     |
-| --------         | ------     | ----------- |
-| name             | string     | null: false |
-| text             | text       | null: false |
-| price            | integer    | null: false |
-| condition_id     | integer    | null: false |
-| shipping_free_id | integer    | null: false |
-| shipping_area_id | integer    | null: false |
-| shipping_day_id  | integer    | null: false |
-| category_id      | integer    | null: false |
-| user             | references | null: false |
+| Column           | Type       | Options           |
+| --------         | ------     | -----------       |
+| name             | string     | null: false       |
+| text             | text       | null: false       |
+| price            | integer    | null: false       |
+| condition_id     | integer    | null: false       |
+| shipping_free_id | integer    | null: false       |
+| shipping_area_id | integer    | null: false       |
+| shipping_day_id  | integer    | null: false       |
+| category_id      | integer    | null: false       |
+| user             | references | null: false       |
+|                                 foreign_key: true |
 
 ### Association
 
 - belongs_to :user
-- has_many :shipping_manegements
+- has_one :shipping_manegement
 
 ## shipping_adress テーブル
 
-| Column              | Type       | Options     |
-| --------            | ------     | ----------- |
-| post_code           | string     | null: false |
-| shipping_area_id    | integer    | null: false |
-| city                | string     | null: false |
-| house_number        | string     | null: false |
-| building_name       | string     |             |
-| phone_number        | string     | null: false |
-| shipping_manegement | references | null: false |
+| Column              | Type       | Options           |
+| --------            | ------     | -----------       |
+| post_code           | string     | null: false       |
+| shipping_area_id    | integer    | null: false       |
+| city                | string     | null: false       |
+| house_number        | string     | null: false       |
+| building_name       | string     |                   |
+| phone_number        | string     | null: false       |
+| shipping_manegement | references | null: false       |
+|                                    foreign_key: true |
 
 ### Association
 
-
-- has_many :shipping_manegements
+- belongs_to :shipping_manegement
 
 ## shipping_manegements テーブル
 
-| Column          | Type       | Options     |
-| --------        | ------     | ----------- |
-| item            | references | null: false |
-| user            | references | null: false |
+| Column          | Type       | Options           |
+| --------        | ------     | -----------       |
+| item            | references | null: false       |
+|                                foreign_key: true |
+| user            | references | null: false       |
+|                                foreign_key: true |
 
 ### Association
 
-- belongs_to :item
+- belongs_to :shipping_manegement
 - belongs_to :user
-- belongs_to :shipping_adress
+- has_one :shipping_adress
