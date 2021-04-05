@@ -5,6 +5,7 @@
 | Column              | Type       | Options      |
 | --------            | ------     | -----------  |
 | email               | string     | unique: true |
+|                                    null: false  |
 | encrypted_password  | string     | null: false  |
 | name                | string     | null: false  |
 | first_name          | string     | null: false  |
@@ -12,12 +13,12 @@
 | first_name_kana     | string     | null: false  |
 | last_name_kana      | string     | null: false  |
 | birthday            | date       | null: false  |
-| user_id             | references | null: false  |
 
 ### Association
 
 - has_many :items
-- has_one :shipping_adress
+- has_many :shipping_adress
+- has_many :shipping_manegements
 
 ## items テーブル
 
@@ -26,7 +27,6 @@
 | name             | string     | null: false |
 | text             | text       | null: false |
 | price            | integer    | null: false |
-| brand            | text       | null: false |
 | condition_id     | integer    | null: false |
 | shipping_free_id | integer    | null: false |
 | shipping_area_id | integer    | null: false |
@@ -37,19 +37,33 @@
 ### Association
 
 - belongs_to :user
+- has_many :shipping_manegements
 
 ## shipping_adress テーブル
 
+| Column           | Type       | Options     |
+| --------         | ------     | ----------- |
+| post_code        | string     | null: false |
+| shipping_area_id | integer    | null: false |
+| city             | string     | null: false |
+| house_number     | string     | null: false |
+| building_name    | string     |             |
+| phone_number     | integer    | null: false |
+
+### Association
+
+- belongs_to :user
+- has_one :shipping_manegement
+
+## shipping_manegements テーブル
+
 | Column          | Type       | Options     |
 | --------        | ------     | ----------- |
-| post_code       | string     | null: false |
-| shipping_area   | integer    | null: false |
-| city            | string     | null: false |
-| house_number    | string     | null: false |
-| building_name   | string     |             |
-| phone_number    | integer    | null: false |
+| item            | references | null: false |
+| shipping_adress | references | null: false |
 | user            | references | null: false |
 
 ### Association
 
+- belongs_to :item
 - belongs_to :user
