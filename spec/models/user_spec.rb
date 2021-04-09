@@ -9,7 +9,7 @@ RSpec.describe User, type: :model do
   describe "ユーザー管理機能" do
    
     it "全て入力すれば登録できること" do
-      @user.valid?
+      expect(@user).to be_valid
     end
 
     it "ニックネームが必須であること" do
@@ -25,10 +25,11 @@ RSpec.describe User, type: :model do
     end
 
     it "メールアドレスが一意性であること" do
-      user = User.new(name: "test2", email: "aaa111", password: "aaa222", password_confirmation: "aaa222", first_name: "い", last_name: "を", first_name_kana: "イ", last_name_kana: "ヲ", birthday: "2021-02-02")
-      @user.email = 'aaa111'
-      @user.valid?
-      expect(@user.errors.full_messages).to include("Email is invalid")
+      @user.save
+      another_user = FactoryBot.build(:user)
+      another_user.email = @user.email
+      another_user.valid?
+      expect(another_user.errors.full_messages).to include('Email has already been taken')
     end
 
     it "メールアドレスは、@を含む必要があること" do
