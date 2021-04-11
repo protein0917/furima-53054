@@ -6,7 +6,7 @@ function calc (){
     // 下記を追記して、要素の値を取得。
     const itemPriceValue = itemPrice.value
     const Tax = 0.1;
-    const tax_fee = itemPriceValue * Tax;
+    const tax_fee = Math.floor(itemPriceValue * Tax);
     const profit = itemPriceValue - tax_fee;
     const taxArea = document.getElementById("add-tax-price");
     const profitArea = document.getElementById("profit");
