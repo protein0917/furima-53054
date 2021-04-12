@@ -89,31 +89,31 @@ RSpec.describe Item, type: :model do
       end
 
       it "アクティブハッシュが1のときは登録できない（カテゴリー）" do
-        @item.category_id = '1'
+        @item.category_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Category must be other than 1")
       end
 
       it "アクティブハッシュが1のときは登録できない（商品の状態）" do
-        @item.condition_id = '1'
+        @item.condition_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Condition must be other than 1")
       end
 
       it "アクティブハッシュが1のときは登録できない（配送料）" do
-        @item.shipping_free_id = '1'
+        @item.shipping_free_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping free must be other than 1")
       end
 
       it "アクティブハッシュが1のときは登録できない（地域）" do
-        @item.shipping_area_id = '1'
+        @item.shipping_area_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping area must be other than 1")
       end
 
       it "アクティブハッシュが1のときは登録できない（日数）" do
-        @item.shipping_day_id = '1'
+        @item.shipping_day_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping day must be other than 1")
       end
