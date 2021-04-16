@@ -13,6 +13,16 @@ RSpec.describe ManegementAddress, type: :model do
       it "全て入力すれば登録できること" do
         expect(@manegement_address).to be_valid
       end
+
+      it "建物名がなくても登録できること" do
+        @manegement_address.building_name = ''
+        expect(@manegement_address).to be_valid
+      end
+
+      it "電話番号は11桁以内の数値のみ保存可能なこと(9桁)" do
+        @manegement_address.phone_number = '123123412'
+        expect(@manegement_address).to be_valid
+      end
     end
 
     context '登録ができない時' do
@@ -23,9 +33,9 @@ RSpec.describe ManegementAddress, type: :model do
       end
 
       it "配送先の情報として、都道府県が必須であること" do
-        @manegement_address.shipping_area_id = ''
+        @manegement_address.shipping_area_id = '1'
         @manegement_address.valid?
-        expect(@manegement_address.errors.full_messages).to include("Shipping area can't be blank", "Shipping area is not a number")
+        expect(@manegement_address.errors.full_messages).to include("Shipping area must be other than 1")
       end
 
       it "配送先の情報として、市区町村が必須であること" do
@@ -52,12 +62,6 @@ RSpec.describe ManegementAddress, type: :model do
         expect(@manegement_address.errors.full_messages).to include("Post code is invalid")
       end
 
-      it "電話番号は11桁以内の数値のみ保存可能なこと(9桁)" do
-        @manegement_address.phone_number = '123123412'
-        @manegement_address.valid?
-        expect(@manegement_address.errors.full_messages).to include("Phone number is invalid")
-      end
-
       it "電話番号は11桁以内の数値のみ保存可能なこと(12桁)" do
         @manegement_address.phone_number = '123123412345'
         @manegement_address.valid?
@@ -70,6 +74,23 @@ RSpec.describe ManegementAddress, type: :model do
         expect(@manegement_address.errors.full_messages).to include("Token can't be blank")
       end
 
+      it "電話番号は英数混合では登録できないこと" do
+        @manegement_address.phone_number = '1231234aaaa'
+        @manegement_address.valid?
+        expect(@manegement_address.errors.full_messages).to include("Phone number is invalid")
+      end
+
+      it "user_idが無いと登録できないこと" do
+        @manegement_address.user_id = nil
+        @manegement_address.valid?
+        expect(@manegement_address.errors.full_messages).to include("User can't be blank")
+      end
+
+      it "item_idが無いと登録できないこと" do
+        @manegement_address.item_id = nil
+        @manegement_address.valid?
+        expect(@manegement_address.errors.full_messages).to include("Item can't be blank")
+      end
 
     end
   end

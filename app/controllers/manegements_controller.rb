@@ -1,21 +1,17 @@
 class ManegementsController < ApplicationController
   before_action :authenticate_user!
+  before_action :definition_item, only: [:index, :create]
   # before_action :manegement_address_params, only: [:index, :create]
 
   def index
     @manegement_address = ManegementAddress.new
-    @item = Item.find(params[:item_id])
-    if current_user == @item.user
+    if current_user == @item.user || @item.manegement.present?
        redirect_to root_path
-    end
-    if @item.manegement.present?
-      redirect_to root_path
     end
   end
 
   def create
     @manegement_address = ManegementAddress.new(manegement_address_params)
-    @item = Item.find(params[:item_id])
     if@manegement_address.valid?
       pay_item
       @manegement_address.save
@@ -26,6 +22,10 @@ class ManegementsController < ApplicationController
   end
 
   private
+
+  def definition_item
+    @item = Item.find(params[:item_id])
+  end
 
   def manegement_address_params
     params.require(:manegement_address).permit(:post_code, :shipping_area_id, :city, :house_number, :building_name, :phone_number, :manegement_id).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
