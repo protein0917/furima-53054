@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :item_find, only: [:show, :edit, :update, :destroy]
   before_action :user_params, only: [:edit, :update, :destroy]
+  before_action :top_move, only: [:edit, :update, :destroy]
 
   def index
     @items = Item.all.order('id DESC')
@@ -53,6 +54,12 @@ class ItemsController < ApplicationController
 
   def user_params
     unless current_user.id == @item.user_id
+      redirect_to root_path
+    end
+  end
+
+  def top_move
+    if @item.manegement.present?
       redirect_to root_path
     end
   end

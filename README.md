@@ -16,7 +16,7 @@
 ### Association
 
 - has_many :items
-- has_many :shipping_manegements
+- has_many :manegements
 
 ## items テーブル
 
@@ -35,9 +35,9 @@
 ### Association
 
 - belongs_to :user
-- has_one :shipping_manegement
+- has_one :manegement
 
-## shipping_adress テーブル
+## adress テーブル
 
 | Column              | Type       | Options                        |
 | --------            | ------     | -----------                    |
@@ -47,13 +47,13 @@
 | house_number        | string     | null: false                    |
 | building_name       | string     |                                |
 | phone_number        | string     | null: false                    |
-| shipping_manegement | references | null: false, foreign_key: true |
+| manegement          | references | null: false, foreign_key: true |
 
 ### Association
 
-- belongs_to :shipping_manegement
+- belongs_to :manegement
 
-## shipping_manegements テーブル
+## manegements テーブル
 
 | Column          | Type       | Options                        |
 | --------        | ------     | -----------                    |
@@ -64,4 +64,4 @@
 
 - belongs_to :item
 - belongs_to :user
-- has_one :shipping_adress
+- has_one :adress
