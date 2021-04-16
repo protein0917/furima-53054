@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_09_070756) do
+ActiveRecord::Schema.define(version: 2021_04_13_123707) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -33,38 +33,64 @@ ActiveRecord::Schema.define(version: 2021_04_09_070756) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "adresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "post_code", null: false
+    t.integer "shipping_area_id", null: false
+    t.string "city", null: false
+    t.string "house_number", null: false
+    t.string "building_name", null: false
+    t.string "phone_number", null: false
+    t.bigint "manegement_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["manegement_id"], name: "index_adresses_on_manegement_id"
+  end
+
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
-    t.text "text"
-    t.integer "price"
-    t.integer "condition_id"
-    t.integer "shipping_free_id"
-    t.integer "shipping_area_id"
-    t.integer "shipping_day_id"
-    t.integer "category_id"
-    t.bigint "user_id"
+    t.string "name", null: false
+    t.text "text", null: false
+    t.integer "price", null: false
+    t.integer "condition_id", null: false
+    t.integer "shipping_free_id", null: false
+    t.integer "shipping_area_id", null: false
+    t.integer "shipping_day_id", null: false
+    t.integer "category_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_items_on_user_id"
   end
 
+  create_table "manegements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "item_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["item_id"], name: "index_manegements_on_item_id"
+    t.index ["user_id"], name: "index_manegements_on_user_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "name", null: false
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "first_name_kana", null: false
+    t.string "last_name_kana", null: false
+    t.date "birthday", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "name"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "first_name_kana"
-    t.string "last_name_kana"
-    t.date "birthday"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "adresses", "manegements"
+  add_foreign_key "items", "users"
+  add_foreign_key "manegements", "items"
+  add_foreign_key "manegements", "users"
 end
