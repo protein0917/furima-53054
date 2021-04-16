@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :item_find, only: [:show, :edit, :update, :destroy]
   before_action :user_params, only: [:edit, :update, :destroy]
-  before_action :top_move, only: [:edit, :update]
+  before_action :top_move, only: [:edit, :update, :destroy]
 
   def index
     @items = Item.all.order('id DESC')
