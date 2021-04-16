@@ -1,7 +1,6 @@
 class ManegementsController < ApplicationController
   before_action :authenticate_user!
   before_action :definition_item, only: [:index, :create]
-  # before_action :manegement_address_params, only: [:index, :create]
 
   def index
     @manegement_address = ManegementAddress.new

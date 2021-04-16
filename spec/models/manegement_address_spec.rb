@@ -33,7 +33,7 @@ RSpec.describe ManegementAddress, type: :model do
       end
 
       it "配送先の情報として、都道府県が必須であること" do
-        @manegement_address.shipping_area_id = '1'
+        @manegement_address.shipping_area_id = 1
         @manegement_address.valid?
         expect(@manegement_address.errors.full_messages).to include("Shipping area must be other than 1")
       end
