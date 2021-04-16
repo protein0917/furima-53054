@@ -26,6 +26,7 @@
     </div>
 
 
+    <% unless @item.manegement.present? %>
     <% if user_signed_in? %>
       <% if current_user.id == @item.user_id %>
       <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
@@ -38,7 +39,7 @@
 
       <% end %>
     <% end %>
-
+    <% end %>
 
     <div class="item-explain-box">
       <span><%= @item.text %></span>
